@@ -3,7 +3,6 @@ from dash import Dash, Input, Output, dcc, html
 
 data = (
     pd.read_csv("avocado.csv")
-    # .query("type == 'conventional' and region == 'Albany'")
     .assign(Date=lambda data: pd.to_datetime(data["Date"], format="%Y-%m-%d"))
     .sort_values(by="Date")
 )
@@ -22,7 +21,18 @@ external_stylesheets = [
 ]
 
 app = Dash(__name__, external_stylesheets=external_stylesheets)
-app.title = "Avocado Analytics: Understand your avocadoes"
+app.title = "Avocado Analytics: UnderstandX your avocadoes"
+## Add Web-Icon
+app._favicon = ('assets/favicon.ico')
+
+links=[
+    {"text": "GitHub Repository", "url": "https://github.com/AkanimohOD19A/"},
+    {"text": "Portfolio", "url": "https://akanimohod19a.github.io/"},
+    {"text": "Shoot me a mail", "url": "danielamahtoday@gmail.com"}
+]
+
+link_items = [html.Li(html.A(link["text"], href=link["url"])) for link in links]
+
 
 app.layout = html.Div(
     children=[
@@ -114,6 +124,24 @@ app.layout = html.Div(
             ],
             className="wrapper",
         ),
+        html.Footer(
+            children=[
+                html.Div(
+                    [
+                        html.P("Tutorial Adopted by Akan Daniel | AfrologicInsect"),
+                        html.P("Courtesy: RealPython & Pythonanywhere (Hosting)"),
+                    ],
+                    className="left-div"
+                ),
+                html.Div(
+                    [
+                        html.P(link_items)
+                    ],
+                    # className="link"
+                ),
+            ],
+            className="footer",
+        )
     ]
 )
 
